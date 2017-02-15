@@ -9,8 +9,9 @@ class User < ActiveRecord::Base
 
 
   def self.find_by_credentials(user_name, password)
-    user = User.find_by(username: user_name)
-    user if user.is_password?(password)
+    user = User.find_by_username(user_name)
+    return user if user && user.is_password?(password)
+    nil
   end
 
   def ensure_session_key
@@ -29,6 +30,6 @@ class User < ActiveRecord::Base
   end
 
   def is_password?(password)
-    BCrypt::Password.new(password_digest).is_password?(password)
+    BCrypt::Password.new(self.password_digest).is_password?(password)
   end
 end

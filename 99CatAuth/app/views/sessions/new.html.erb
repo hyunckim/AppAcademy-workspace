@@ -1,0 +1,17 @@
+<h2>Log in</h2>
+
+<form action="/session/" method="post">
+  <input type="hidden" name = "_method" value = "post">
+
+  <div>
+    <label for="username">Username</label>
+    <input type="text" name="user[username]" id="username">
+  </div>
+  <br>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="user[password]" id="password">
+  </div>
+  <br>
+  <input type="submit" value = "Sign In">
+</form>

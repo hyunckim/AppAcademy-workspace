@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :goto_cats
+
   def new
     render :new
   end
@@ -6,12 +8,15 @@ class UsersController < ApplicationController
   def create
     @user = User.new(users_param)
 
-    if @user.save!
-      render @user.to_json
+    if @user.save
+      #log user in, new session
+      #session[:session_token] = @user.session_token
+      login_user!
+      redirect_to cats_url
     else
-      render (
-        errors[:User] << "can not be created!", status: :unprocessable_entity
-      )
+      flash[:errors] = @user.errors.full_messages
+      #redirect_to new_user_url
+      render :new
     end
   end
 

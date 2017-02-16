@@ -1,0 +1,23 @@
+<h3>Log In</h3>
+
+<%= render "shared/errors" %>
+<section><div>
+
+
+<form action="<%= session_url %>" method="post">
+  <%= auth_token %>
+
+<div>
+  <label for="email">Email</label>
+  <input type="text" name="user[email]" id ="email">
+</div>
+
+<div>
+  <label for="password">Password</label>
+  <input type="password" name="user[password]" id="email">
+</div>
+
+<input type="submit">
+</form>
+
+</div></section>

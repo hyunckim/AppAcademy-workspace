@@ -26,8 +26,19 @@ class ApplicationController < ActionController::Base
   end
 
   def require_moderator
-    @sub = Sub.find(sub_params[:id])
-    @sub.moderator_id == current_user.id
+    @sub = Sub.find(params[:id])
+    unless @sub.moderator_id == current_user.id
+      flash[:errors] = ["You can't edit someone else's sub"]
+      redirect_to subs_url
+    end
+  end
+
+  def require_author
+    @post = Post.find(params[:id])
+    unless @post.author_id == current_user.id || @post.moderator.id == current_user.id
+      flash[:errors] = ["You can't edit someone else's post"]
+      redirect_to post_url(@post)
+    end
   end
 
   def current_user

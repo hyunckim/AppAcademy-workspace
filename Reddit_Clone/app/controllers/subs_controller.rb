@@ -10,6 +10,7 @@ class SubsController < ApplicationController
 
   def create
     @sub = Sub.new(sub_params)
+    @sub.moderator = current_user
     if @sub.save
       render :show
     else
@@ -24,20 +25,17 @@ class SubsController < ApplicationController
   end
 
   def show
-    @sub = Sub.find(sub_params[:id])
+    @sub = Sub.find(params[:id])
     render :show
   end
 
   def edit
-    # @sub = Sub.find_by_title(sub_params[:title])
-    @sub = Sub.find(sub_params[:id])
-    @current_user = current_user
+    @sub = Sub.find(params[:id])
     render :edit
   end
 
   def update
-    @sub = Sub.find_by_title(sub_params[:title])
-
+    @sub = Sub.find(params[:id])
     if @sub.update_attributes(sub_params)
       render :show
     else

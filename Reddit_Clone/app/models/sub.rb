@@ -13,12 +13,10 @@
 class Sub < ActiveRecord::Base
   validates :title, presence: true, uniqueness: true
   validates :description, presence: true
-  validates :user, presence: true
+  validates :moderator, presence: true
 
-  belongs_to :moderator,
-    class_name: :User,
-    primary_key: :id,
-    foreign_key: :moderator_id
+  belongs_to :moderator, inverse_of: :subs
+    class_name: :User
 
-  #has_many posts
+  has_many :posts
 end

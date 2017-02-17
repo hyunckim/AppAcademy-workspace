@@ -14,6 +14,22 @@ class ApplicationController < ActionController::Base
     user.reset_session_token!
   end
 
+  def logged_in?
+    current_user != nil
+  end
+
+  def require_login
+    unless logged_in?
+      flash[:errors] = ["You must login before this action"]
+      redirect_to new_session_url
+    end
+  end
+
+  def require_moderator
+    @sub = Sub.find(sub_params[:id])
+    @sub.moderator_id == current_user.id
+  end
+
   def current_user
     User.find_by_session_token(session[:session_token])
   end

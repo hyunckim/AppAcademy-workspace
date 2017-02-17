@@ -1,0 +1,23 @@
+<form action= "<%= url %>" method="post">
+<input type="hidden" name="_method" value="<%= method %>">
+  <%= auth_token %>
+
+  <label for="post[title]">Title</label>
+  <input type="text" name="post[title]" value="<%= post.title %>"><br>
+
+  <label for="post[url]">URL (optional)</label>
+  <input type="text" name="post[url]" value="<%= post.url %>"><br>
+
+  <label for="post[content]">Content (optional)</label>
+  <textarea name="post[content]" rows="8" cols="80"><%= post.content %></textarea><br>
+
+  <label for="post[sub_id]">Sub</label>
+  <select name="post[sub_id]">
+    <option disabled selected>--Select One--</option>
+    <% Sub.all.each do |sub| %>
+      <option value="<%= sub.id %>" "<%= "selected" if post.sub_id == sub.id %>"><%= sub.title.capitalize %></option>
+    <% end %>
+  </select><br>
+
+  <input type="submit" value="<%= button_text %>">
+</form>

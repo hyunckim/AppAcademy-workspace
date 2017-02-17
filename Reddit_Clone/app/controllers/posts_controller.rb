@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :require_author, only: [:edit, :update, :destroy]
-   
+
   def new
     @post = Post.new
     render :new
@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.author = current_user
     if @post.save
       redirect_to post_url(@post)
 
@@ -40,11 +41,11 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirct_to subs_url
+    redirect_to subs_url
   end
 
   private
   def post_params
-    params.require(:post).permit(:title, :url, :content, :sub_id, :author_id)
+    params.require(:post).permit(:title, :url, :content, :sub_id)
   end
 end

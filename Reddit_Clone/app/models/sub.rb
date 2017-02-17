@@ -15,7 +15,7 @@ class Sub < ActiveRecord::Base
   validates :description, presence: true
   validates :moderator, presence: true
 
-  belongs_to :moderator, inverse_of: :subs
+  belongs_to :moderator, inverse_of: :subs,
     class_name: :User
 
   has_many :posts

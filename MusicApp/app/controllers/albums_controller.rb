@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   def show
-    @album = @album.find_by(id: params[:id])
+    @album = Album.find_by(id: params[:id])
     render :show
   end
 
@@ -22,11 +22,18 @@ class AlbumsController < ApplicationController
   end
 
   def edit
-
+    @album = Album.find_by(id: params[:id])
+    render :edit
   end
 
   def update
-
+    @album = Album.find_by(id: params[:id])
+    if @album.update_attributes(album_params)
+      redirect_to album_url(@album)
+    else
+      flash.now[:errors] = @album.errors.full_messages
+      render :new
+    end
   end
 
   def destroy

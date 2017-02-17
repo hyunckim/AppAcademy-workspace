@@ -1,0 +1,36 @@
+<% action = (track.persisted? ? track_url(track) : tracks_url ) %>
+<% method = (track.persisted? ? :patch : :post ) %>
+<% submit = (track.persisted? ? "Edit" : "Add" ) %>
+
+
+<%= render "shared/errors" %>
+
+<form action="<%= action %>" method="post">
+<input type="hidden" name="_method" value="<%= method %>">
+
+<div>
+  <label for="name">Track Name</label>
+  <input type="text" name="track[track_name]"
+  value="<%= track.track_name %>" id = "name">
+</div>
+
+<div>
+  <select name="track[album_id]">
+    <option disabled selected value>-- select an album --</option>
+  <% Album.all.each do |album| %>
+    <option value="<%= album.id %>"
+      <%= track.album_id == album.id ? "selected" : "" %> >
+      <%= album.album_name %></option>
+  <% end %>
+  </select>
+</div>
+
+<div>
+  <input type="radio" name="track[form]"
+  value="bonus" <%= track.form == "bonus" ? "checked" : ""%>>Bonus
+  <input type="radio" name="track[form]"
+  value="regular" <%= track.form == "regular" ? "checked" : ""%>>Regular
+</div>
+
+<input type="submit" name="" value="<%= submit %>">
+</form>

@@ -13,7 +13,7 @@ class TracksController < ApplicationController
     @track = Track.new(track_params)
 
     if @track.save
-      redirect_to track_url
+      redirect_to track_url(@track)
 
     else
       flash.now[:errors] = @track.errors.full_messages
@@ -22,11 +22,18 @@ class TracksController < ApplicationController
   end
 
   def edit
-
+    @track = Track.find_by(id: params[:id])
+    render :edit
   end
 
   def update
-
+    @track = Track.find_by(id: params[:id])
+    if @track.update_attributes(track_params)
+      redirect_to track_url(@track)
+    else
+      flash.now[:errors] = @track.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
@@ -35,6 +42,6 @@ class TracksController < ApplicationController
 
   private
     def track_params
-      params.require(:track).permit(:track_name, :album_id, :form)
+      params.require(:track).permit(:track_name, :album_id, :form, :lyrics)
     end
 end
